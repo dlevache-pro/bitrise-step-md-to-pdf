@@ -18,18 +18,18 @@ is_always_run: false
 is_skippable: false
 run_if: ""
 inputs:
-  - md_file: ''
+  - md_files: ''
     opts:
       title: "Markdown input file"
       summary: The path to the markdown file.
-      description: 
+      description: Multiple files can be specified using the delimted | (ex. file1.md | file2.md) 
       is_expand: true
       is_required: true
       value_options: []
   - output_dir: "$BITRISE_DEPLOY_DIR"
     opts:
       title: "Output directory"
-      summary: The destination where to write the PDF file.
+      summary: The destination where to write the PDF files.
       description: 
       is_expand: true
       is_required: true

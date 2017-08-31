@@ -75,6 +75,11 @@ function validate_required_input_with_options {
 	fi
 }
 
+function trim_string {
+  result=`echo -n $1 | xargs`
+  echo $result
+}
+
 #=======================================
 # Main
 #=======================================
@@ -82,32 +87,44 @@ function validate_required_input_with_options {
 #
 # Validate parameters
 echo_info "Configs:"
-echo_details "* md_file: $md_file"
+echo_details "* md_file: $md_files"
 echo_details "* output_dir: $output_dir"
 echo
 
-validate_required_input "md_file" $md_file
+validate_required_input "md_file" $md_files
 validate_required_input "output_dir" $output_dir
 
 # this expansion is required for paths with ~
 #  more information: http://stackoverflow.com/questions/3963716/how-to-manually-expand-a-special-variable-ex-tilde-in-bash
-eval expanded_md_file="${md_file}"
-
-if [ ! -f "${expanded_md_file}" ]; then
-  echo_fail "The source md file doesn't exist at: ${expanded_md_file}"
-  exit 1
-fi
 
 echo_info "Installing pandoc..."
 brew install pandoc
 
-echo "Generating PDF..."
+IFS="|"
+md_file_list=($md_files)
+unset IFS
 
-OUT_FILE=`basename $expanded_md_file`
-OUT_FILE="$output_dir/${OUT_FILE%.*}.pdf"
+[ -d "$output_dir" ] || mkdir -p "$output_dir"
 
-export PATH="/Library/TeX/texbin/:/usr/local/bin/:$PATH"
-pandoc -o ${OUT_FILE} -f markdown_github -V geometry:margin=0.6in $MD_DOCUMENT_PATH
+for (( i=0; i<${#md_file_list[@]}; i++ )); do
+  md_file=$(trim_string "${md_file_list[i]}")
+
+  eval expanded_md_file="${md_file}"
+
+  if [ ! -f "${expanded_md_file}" ]; then
+    echo_fail "The source md file doesn't exist at: ${expanded_md_file}"
+    exit 1
+  fi
+
+  echo "Generating PDF..."
+
+  OUT_FILE=`basename $expanded_md_file`
+  OUT_FILE="$output_dir/${OUT_FILE%.*}.pdf"
+
+  export PATH="/Library/TeX/texbin/:/usr/local/bin/:$PATH"
+  pandoc -o ${OUT_FILE} -f markdown_github -V geometry:margin=0.6in $expanded_md_file
+
+done
 
 # --- Export Environment Variables for other Steps:
 # You can export Environment Variables for other Steps with
