@@ -28,7 +28,6 @@ inputs:
       title: "Markdown input file"
       summary: The path to the markdown file.
       description: Multiple files can be specified using the delimted | (ex. file1.md | file2.md) 
-      is_expand: true
       is_required: true
   - output_dir: "$BITRISE_DEPLOY_DIR"
     opts:
