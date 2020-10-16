@@ -30,7 +30,6 @@ inputs:
       description: Multiple files can be specified using the delimted | (ex. file1.md | file2.md) 
       is_expand: true
       is_required: true
-      value_options: []
   - output_dir: "$BITRISE_DEPLOY_DIR"
     opts:
       title: "Output directory"
