@@ -2,17 +2,22 @@ title: "Markdown to PDF"
 summary: This step converts a markdown file written in github-markdown into PDF
 description: |-
     This step converts a markdown file written in github-markdown into PDF
-website: https://github.com/FutureWorkshops/bitrise-step-md-to-pdf
-source_code_url: https://github.com/FutureWorkshopsbitrise-step-md-to-pdf
+    Forked from https://github.com/FutureWorkshops/bitrise-step-md-to-pdf
+website: https://github.com/dlevache-pro/bitrise-step-md-to-pdf
+source_code_url: https://github.com/dlevache-pro/bitrise-step-md-to-pdf
 host_os_tags:
   - osx-10.10
   - osx-10.9
 project_type_tags:
+  - android
   - ios
   - xamarin
 type_tags:
   - pdf
   - md
+deps:
+  brew:
+  - name: pandoc
 is_requires_admin_user: true
 is_always_run: false
 is_skippable: false
