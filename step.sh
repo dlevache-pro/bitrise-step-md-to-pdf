@@ -97,9 +97,6 @@ validate_required_input "output_dir" $output_dir
 # this expansion is required for paths with ~
 #  more information: http://stackoverflow.com/questions/3963716/how-to-manually-expand-a-special-variable-ex-tilde-in-bash
 
-echo_info "Installing pandoc..."
-brew install pandoc
-
 IFS="|"
 md_file_list=($md_files)
 unset IFS
